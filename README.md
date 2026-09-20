@@ -70,7 +70,7 @@
 
 | Sheet | 内容 |
 | :--- | :--- |
-| **接口信息收集** | 7 个接口的 URL、方法、参数、响应 |
+| **接口信息收集** | 核心接口的 URL、方法、参数、响应 |
 | **缺陷跟踪** | 4 个缺陷的详细信息 |
 | **回归用例** | 3 条回归用例——对应后端 Bug |
 | **case1** | 独立用例——正向、异常、越权 |
@@ -138,6 +138,14 @@ student-management-system/
 4. 运行 `StudentManagementApplication`
 5. 访问 `http://localhost:8080/student-system/login.html`
 
+---
+## 自动化测试报告展示
+### 串行执行
+
+![串行执行](doc/allure_serial.png)
+---
+### 并行执行
+![并行测试](doc/allure_parallel.png)
 ---
 
 ## 配套项目
