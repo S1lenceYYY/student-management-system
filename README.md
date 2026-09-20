@@ -132,11 +132,11 @@ student-management-system/
 - MySQL 8.0+
 
 ### 运行步骤
-1. 导入 MySQL 数据库——执行 `src/main/resources/db/schema.sql`
-2. 复制 `application.yml.example` 为 `application.yml`——填自己的数据库配置
-3. Maven 编译——`mvn clean package`
-4. 运行 `StudentManagementApplication`
-5. 访问 `http://localhost:8080/student-system/login.html`
+1. 本地预先新建 MySQL8.0 空数据库，执行 `src/main/resources/db/schema.sql` 导入数据表
+2. 复制 `application.yml.example` 重命名为 `application.yml`，修改数据库连接地址、账号、密码
+3. IDEA直接运行启动类 `StudentManagementApplication`
+4. 浏览器访问：`http://localhost:8080/student-system/login.html`
+
 
 ---
 ## 自动化测试报告展示
