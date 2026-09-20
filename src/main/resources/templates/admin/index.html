@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理员首页 - 学生成绩管理系统</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #FF7F26 0%, #eda356 100%);
+        }
+        .sidebar {
+            background: white;
+            min-height: calc(100vh - 56px);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        .sidebar .nav-link {
+            color: #333;
+            padding: 12px 20px;
+            border-left: 3px solid transparent;
+        }
+        .sidebar .nav-link:hover {
+            background-color: #f8f9fa;
+            border-left-color: #FF7F26;
+        }
+        .sidebar .nav-link.active {
+            background-color: #f0f0ff;
+            border-left-color: #FF7F26;
+            color: #FF7F26;
+            font-weight: bold;
+        }
+        .content-area {
+            padding: 20px;
+        }
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .table th {
+            background-color: #f8f9fa;
+        }
+        .btn-orange {
+            background-color: #FF7F26;
+            border-color: #FF7F26;
+            color: white;
+        }
+        .btn-orange:hover {
+            background-color: #e66f1f;
+            border-color: #e66f1f;
+            color: white;
+        }
+        .btn-orange:focus {
+            box-shadow: 0 0 0 0.2rem rgba(255, 127, 38, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark">
+        <span class="navbar-brand mb-0 h1">学生成绩管理系统 - 管理员</span>
+        <div>
+            <span class="text-white mr-3" id="userInfo"></span>
+            <a href="/student-system/logout" class="btn btn-outline-light btn-sm">退出登录</a>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 sidebar">
+                <nav class="nav flex-column mt-3">
+                    <a class="nav-link active" href="#" data-page="class">班级管理</a>
+                    <a class="nav-link" href="#" data-page="course">课程管理</a>
+                    <a class="nav-link" href="#" data-page="student">学生管理</a>
+                    <a class="nav-link" href="#" data-page="score">成绩管理</a>
+                </nav>
+            </div>
+            <div class="col-md-10 content-area">
+                <!-- 班级管理 -->
+                <div id="class-page" class="page-content">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">班级管理</h5>
+                            <button class="btn btn-primary btn-sm" onclick="showClassModal()">新增班级</button>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>班级名称</th>
+                                        <th>班级编号</th>
+                                        <th>描述</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="classTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 课程管理 -->
+                <div id="course-page" class="page-content" style="display:none;">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">课程管理</h5>
+                            <button class="btn btn-primary btn-sm" onclick="showCourseModal()">新增课程</button>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>课程名称</th>
+                                        <th>课程编号</th>
+                                        <th>授课教师</th>
+                                        <th>所属班级</th>
+                                        <th>学期</th>
+                                        <th>描述</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="courseTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 学生管理 -->
+                <div id="student-page" class="page-content" style="display:none;">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">学生管理</h5>
+                            <button class="btn btn-primary btn-sm" onclick="showStudentModal()">新增学生</button>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>用户名</th>
+                                        <th>姓名</th>
+                                        <th>所属班级</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 成绩管理 -->
+                <div id="score-page" class="page-content" style="display:none;">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">成绩管理</h5>
+                            <button class="btn btn-primary btn-sm" onclick="showScoreModal()">新增成绩</button>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>学生姓名</th>
+                                        <th>课程名称</th>
+                                        <th>班级</th>
+                                        <th>成绩</th>
+                                        <th>备注</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="scoreTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 班级模态框 -->
+    <div class="modal fade" id="classModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">班级信息</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="classForm">
+                        <input type="hidden" id="classId" name="id">
+                        <div class="form-group">
+                            <label>班级名称：</label>
+                            <input type="text" class="form-control" id="className" name="className" required>
+                        </div>
+                        <div class="form-group">
+                            <label>班级编号：</label>
+                            <input type="text" class="form-control" id="classCode" name="classCode" required>
+                        </div>
+                        <div class="form-group">
+                            <label>描述：</label>
+                            <textarea class="form-control" id="classDescription" name="description"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="saveClass()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 课程模态框 -->
+    <div class="modal fade" id="courseModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">课程信息</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="courseForm">
+                        <input type="hidden" id="courseId" name="id">
+                        <div class="form-group">
+                            <label>课程名称：</label>
+                            <input type="text" class="form-control" id="courseName" name="courseName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>课程编号：</label>
+                            <input type="text" class="form-control" id="courseCode" name="courseCode" required>
+                        </div>
+                        <div class="form-group">
+                            <label>授课教师：</label>
+                            <select class="form-control" id="courseTeacherId" name="teacherId" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label>所属班级：</label>
+                            <select class="form-control" id="courseClassId" name="classId" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label>学期（如：2024-2025-1）：</label>
+                            <input type="text" class="form-control" id="courseSemester" name="semester" placeholder="2024-2025-1" required>
+                        </div>
+                        <div class="form-group">
+                            <label>描述：</label>
+                            <textarea class="form-control" id="courseDescription" name="description"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="saveCourse()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 学生模态框 -->
+    <div class="modal fade" id="studentModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">学生信息</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="studentForm">
+                        <input type="hidden" id="studentId" name="id">
+                        <div class="form-group">
+                            <label>用户名：</label>
+                            <input type="text" class="form-control" id="studentUsername" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label>密码：</label>
+                            <input type="password" class="form-control" id="studentPassword" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label>姓名：</label>
+                            <input type="text" class="form-control" id="studentName" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>所属班级：</label>
+                            <select class="form-control" id="studentClassId" name="classId" required></select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="saveStudent()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 成绩模态框 -->
+    <div class="modal fade" id="scoreModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">成绩信息</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="scoreForm">
+                        <input type="hidden" id="scoreId" name="id">
+                        <div class="form-group">
+                            <label>学生：</label>
+                            <select class="form-control" id="scoreStudentId" name="studentId" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label>课程：</label>
+                            <select class="form-control" id="scoreCourseId" name="courseId" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label>成绩（0-100）：</label>
+                            <input type="number" class="form-control" id="scoreValue" name="score" min="0" max="100" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label>备注：</label>
+                            <textarea class="form-control" id="scoreRemark" name="remark"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="saveScore()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+    <script src="/student-system/static/js/admin.js"></script>
+</body>
+</html>
+
+

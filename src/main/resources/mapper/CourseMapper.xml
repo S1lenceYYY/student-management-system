@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.student.mapper.CourseMapper">
+    
+    <resultMap id="CourseResultMap" type="Course">
+        <id property="id" column="id"/>
+        <result property="courseName" column="course_name"/>
+        <result property="courseCode" column="course_code"/>
+        <result property="teacherId" column="teacher_id"/>
+        <result property="classId" column="class_id"/>
+        <result property="semester" column="semester"/>
+        <result property="description" column="description"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="updatedTime" column="updated_time"/>
+        <result property="teacherName" column="teacher_name"/>
+        <result property="className" column="class_name"/>
+    </resultMap>
+    
+    <select id="findAll" resultMap="CourseResultMap">
+        SELECT c.*, u.name as teacher_name, cl.class_name
+        FROM course c
+        LEFT JOIN user u ON c.teacher_id = u.id
+        LEFT JOIN class cl ON c.class_id = cl.id
+        ORDER BY c.id DESC
+    </select>
+    
+    <select id="findById" resultMap="CourseResultMap">
+        SELECT c.*, u.name as teacher_name, cl.class_name
+        FROM course c
+        LEFT JOIN user u ON c.teacher_id = u.id
+        LEFT JOIN class cl ON c.class_id = cl.id
+        WHERE c.id = #{id}
+    </select>
+    
+    <select id="findByTeacherId" resultMap="CourseResultMap">
+        SELECT c.*, u.name as teacher_name, cl.class_name
+        FROM course c
+        LEFT JOIN user u ON c.teacher_id = u.id
+        LEFT JOIN class cl ON c.class_id = cl.id
+        WHERE c.teacher_id = #{teacherId}
+        ORDER BY c.id DESC
+    </select>
+    
+    <select id="findByClassId" resultMap="CourseResultMap">
+        SELECT c.*, u.name as teacher_name, cl.class_name
+        FROM course c
+        LEFT JOIN user u ON c.teacher_id = u.id
+        LEFT JOIN class cl ON c.class_id = cl.id
+        WHERE c.class_id = #{classId}
+        ORDER BY c.id DESC
+    </select>
+    
+    <select id="findByStudentId" resultMap="CourseResultMap">
+        SELECT DISTINCT c.*, u.name as teacher_name, cl.class_name
+        FROM course c
+        LEFT JOIN user u ON c.teacher_id = u.id
+        LEFT JOIN class cl ON c.class_id = cl.id
+        INNER JOIN user s ON c.class_id = s.class_id
+        WHERE s.id = #{studentId}
+        ORDER BY c.id DESC
+    </select>
+    
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO course (course_name, course_code, teacher_id, class_id, semester, description)
+        VALUES (#{courseName}, #{courseCode}, #{teacherId}, #{classId}, #{semester}, #{description})
+    </insert>
+    
+    <update id="update">
+        UPDATE course
+        <set>
+            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="courseCode != null">course_code = #{courseCode},</if>
+            <if test="teacherId != null">teacher_id = #{teacherId},</if>
+            <if test="classId != null">class_id = #{classId},</if>
+            <if test="semester != null">semester = #{semester},</if>
+            <if test="description != null">description = #{description},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+    
+    <delete id="deleteById">
+        DELETE FROM course WHERE id = #{id}
+    </delete>
+</mapper>
+
+
+
+

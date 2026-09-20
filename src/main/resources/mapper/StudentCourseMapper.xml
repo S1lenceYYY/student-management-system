@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.student.mapper.StudentCourseMapper">
+    
+    <resultMap id="StudentCourseResultMap" type="StudentCourse">
+        <id property="id" column="id"/>
+        <result property="studentId" column="student_id"/>
+        <result property="courseId" column="course_id"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="studentName" column="student_name"/>
+        <result property="courseName" column="course_name"/>
+        <result property="className" column="class_name"/>
+        <result property="semester" column="semester"/>
+    </resultMap>
+    
+    <select id="findAll" resultMap="StudentCourseResultMap">
+        SELECT sc.*, u.name as student_name, c.course_name, cl.class_name, c.semester
+        FROM student_course sc
+        LEFT JOIN user u ON sc.student_id = u.id
+        LEFT JOIN course c ON sc.course_id = c.id
+        LEFT JOIN class cl ON u.class_id = cl.id
+        ORDER BY sc.id DESC
+    </select>
+    
+    <select id="findById" resultMap="StudentCourseResultMap">
+        SELECT sc.*, u.name as student_name, c.course_name, cl.class_name, c.semester
+        FROM student_course sc
+        LEFT JOIN user u ON sc.student_id = u.id
+        LEFT JOIN course c ON sc.course_id = c.id
+        LEFT JOIN class cl ON u.class_id = cl.id
+        WHERE sc.id = #{id}
+    </select>
+    
+    <select id="findByStudentId" resultMap="StudentCourseResultMap">
+        SELECT sc.*, u.name as student_name, c.course_name, cl.class_name, c.semester
+        FROM student_course sc
+        LEFT JOIN user u ON sc.student_id = u.id
+        LEFT JOIN course c ON sc.course_id = c.id
+        LEFT JOIN class cl ON u.class_id = cl.id
+        WHERE sc.student_id = #{studentId}
+        ORDER BY sc.id DESC
+    </select>
+    
+    <select id="findByCourseId" resultMap="StudentCourseResultMap">
+        SELECT sc.*, u.name as student_name, c.course_name, cl.class_name, c.semester
+        FROM student_course sc
+        LEFT JOIN user u ON sc.student_id = u.id
+        LEFT JOIN course c ON sc.course_id = c.id
+        LEFT JOIN class cl ON u.class_id = cl.id
+        WHERE sc.course_id = #{courseId}
+        ORDER BY sc.id DESC
+    </select>
+
+    <select id="findByStudentIdAndCourseId" resultMap="StudentCourseResultMap">
+        SELECT sc.*, u.name as student_name, c.course_name, cl.class_name, c.semester
+        FROM student_course sc
+        LEFT JOIN user u ON sc.student_id = u.id
+        LEFT JOIN course c ON sc.course_id = c.id
+        LEFT JOIN class cl ON u.class_id = cl.id
+        WHERE sc.student_id = #{studentId} AND sc.course_id = #{courseId}
+    </select>
+    
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO student_course (student_id, course_id)
+        VALUES (#{studentId}, #{courseId})
+    </insert>
+    
+    <delete id="deleteById">
+        DELETE FROM student_course WHERE id = #{id}
+    </delete>
+    
+    <delete id="deleteByStudentIdAndCourseId">
+        DELETE FROM student_course WHERE student_id = #{studentId} AND course_id = #{courseId}
+    </delete>
+</mapper>
+
+
+
+

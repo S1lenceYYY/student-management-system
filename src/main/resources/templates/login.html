@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生成绩管理系统 - 登录</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #ffffff 50%, #FF7F26 50%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 50px;
+            width: 100%;
+            max-width: 500px;
+        }
+        .login-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #000000;
+            font-weight: bold;
+        }
+        .form-group label {
+            font-weight: 500;
+            color: #FF7F26;
+        }
+        .btn-login {
+            width: 100%;
+            background: linear-gradient(135deg, #FF8000 50%, #FF7F26 50%);
+            border: none;
+            padding: 12px;
+            font-weight: 500;
+        }
+        .btn-login:hover {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h3 class="login-title">学生成绩管理系统</h3>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">账号：</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="请输入账号" required>
+            </div>
+            <div class="form-group">
+                <label for="password">密码：</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-login">登录</button>
+            <button type="button" class="btn btn-secondary btn-block mt-2" onclick="location.reload()">取消</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(function() {
+            $('#loginForm').on('submit', function(e) {
+                e.preventDefault();
+                var username = $('#username').val();
+                var password = $('#password').val();
+                
+                if (!username || !password) {
+                    alert('请输入账号和密码');
+                    return;
+                }
+                
+                $.ajax({
+                    url: '/student-system/login',
+                    type: 'POST',
+                    data: {username: username, password: password},
+                    success: function(result) {
+                        if (result.code === 200) {
+                            var role = result.data.role;
+                            if (role === 'admin') {
+                                window.location.href = '/student-system/admin/index.html';
+                            } else if (role === 'teacher') {
+                                window.location.href = '/student-system/teacher/index.html';
+                            } else if (role === 'student') {
+                                window.location.href = '/student-system/student/index.html';
+                            }
+                        } else {
+                            alert(result.message || '登录失败');
+                        }
+                    },
+                    error: function() {
+                        alert('登录请求失败，请检查网络连接');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+

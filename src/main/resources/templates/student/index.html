@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生首页 - 学生成绩管理系统</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #FF7F26 0%, #eda356 100%);
+        }
+        .content-area {
+            padding: 20px;
+        }
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .table th {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark">
+        <span class="navbar-brand mb-0 h1">学生成绩管理系统 - 学生</span>
+        <div>
+            <span class="text-white mr-3" id="userInfo"></span>
+            <a href="/student-system/logout" class="btn btn-outline-light btn-sm">退出登录</a>
+        </div>
+    </nav>
+
+    <div class="container-fluid content-area">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- 我的课程 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">我的课程</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>课程名称</th>
+                                    <th>课程编号</th>
+                                    <th>授课教师</th>
+                                    <th>所属班级</th>
+                                    <th>描述</th>
+                                </tr>
+                            </thead>
+                            <tbody id="courseTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 我的成绩 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">我的成绩</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>课程名称</th>
+                                    <th>班级</th>
+                                    <th>成绩</th>
+                                    <th>备注</th>
+                                </tr>
+                            </thead>
+                            <tbody id="scoreTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+    <script src="/student-system/static/js/student.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
