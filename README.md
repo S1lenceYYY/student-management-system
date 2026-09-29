@@ -145,5 +145,5 @@ student-management-system/
 
 ## 配套项目
 
-- **接口自动化框架**：[api-auto-test](https://gitee.com/S1lenceYYY/api-auto-test)
+- **接口自动化框架**：[api-auto-test](https://github.com/S1lenceYYY/api-auto-test)
 - **框架能力**：数据驱动、多角色 Session、双重断言、Allure 报告、云端部署
