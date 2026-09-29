@@ -2,7 +2,7 @@
 ## 项目定位
 本项目是《JavaWeb 应用》课程期末大作业，基于 Spring Boot + MyBatis + MySQL 开发，包含管理员、教师、学生三种角色。
 
-**同时它作为自研接口自动化框架 [api-auto-test](https://gitee.com/S1lenceYYY/api-auto-test) 的被测靶系统**，完整落地接口测试全流程：
+**同时它作为自研接口自动化框架 [api-auto-test](https://github.com/S1lenceYYY/api-auto-test) 的被测靶系统**，完整落地接口测试全流程：
 > **抓包分析 → 用例设计 → 框架适配 → 越权安全测试 → 缺陷排查 → 编写回归测试用例**
 
 项目核心目标并非展示后端开发能力，而是：
